@@ -25,13 +25,42 @@
              <?php
                  $option_values = array('Low', 'Normal', 'High');
                  foreach ($option_values as $key => $value) {
-                   # code...
+                   if ($value == $ul_todo_stored_meta['priority'][0]) {
+                     ?>
+                        <option selected><?php echo $value; ?></option>
+                     <?php
+                   } else {
+                     ?>
+                        <option><?php echo $value; ?></option>
+                     <?php
+                   }
                  }
               ?>
            </select>
          </div>
-      </div>
 
+         <div class="form-group">
+           <label for="details"><?php esc_html_e('Details', 'ul_domain'); ?></label>
+           <?php
+              $content  = get_post_meta($post->ID, 'details', true);
+              $editor   = 'details';
+              $settings = array(
+                'textarea_rows' => 5,
+                'media_buttons' => true
+              );
+
+              wp_editor($content, $editor, $settings);
+            ?>
+         </div>
+
+         <div class="form-group">
+           <label for="due_date"><?php esc_html_e('Due Date', 'ul_domain'); ?></label>
+           <input type="date"
+                  name="due_date"
+                  id="due_date"
+                  value="<?php if(!empty($ul_todo_stored_meta['due_date'])) echo esc_attr($ul_todo_stored_meta['due_date'][0]); ?>">
+         </div>
+      </div>
    <?php
 
 }
